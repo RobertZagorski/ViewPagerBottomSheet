@@ -3,6 +3,10 @@ A sample project demonstrating scrolling issue with the new BottomSheet classes 
 
 ## Issues
 
-- Scrolling of the Coffee page is fine. However, in Milk page, the scroll is not working.
+- Before the modification the effect was following:
 
-<img src="screens/demo.gif" width="360">
+<img src="screens/before.gif" width="360">
+
+- After the modification the effect is following:
+
+<img src="screens/after.gif" width="360">

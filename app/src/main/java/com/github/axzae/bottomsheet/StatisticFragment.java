@@ -6,9 +6,6 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,27 +26,32 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+import biz.laenger.android.vpbs.BottomSheetUtils;
+import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior;
+import pl.rzagorski.viewpagerbottomsheet.ViewPagerBottomSheetDialog;
+import pl.rzagorski.viewpagerbottomsheet.ViewPagerBottomSheetDialogFragment;
 
-public class StatisticFragment extends BottomSheetDialogFragment {
+public class StatisticFragment extends ViewPagerBottomSheetDialogFragment {
 
-    private BottomSheetBehavior mBehavior;
+    private ViewPagerBottomSheetBehavior mBehavior;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+        ViewPagerBottomSheetDialog dialog = (ViewPagerBottomSheetDialog) super.onCreateDialog(savedInstanceState);
         View rootView = View.inflate(getContext(), R.layout.sheet_main, null);
 
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
+        dialog.setContentView(rootView);
+        mBehavior = ViewPagerBottomSheetBehavior.from((View) rootView.getParent());
+        mBehavior.setPeekHeight(400);
         if (viewPager != null && tabLayout != null) {
             initViewPager();
         }
 
-        dialog.setContentView(rootView);
-        mBehavior = BottomSheetBehavior.from((View) rootView.getParent());
         return dialog;
     }
 
@@ -58,6 +60,7 @@ public class StatisticFragment extends BottomSheetDialogFragment {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(10);
         tabLayout.setupWithViewPager(viewPager);
+        BottomSheetUtils.setupViewPager(viewPager);
     }
 
     @Override
